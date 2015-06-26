@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Grid Vertical Horizontal Bookmarklet</title>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script>
+        $(function() {
+            // Bookmarkletify, 2013 November 14 Dave Smith
+            $('.bookmarkletify').each(function() {
+
+                var $this, href, newHref;
+
+                $this = $(this);
+                href = $this.attr('href');
+
+                $.ajax({
+                        url: href,
+                        dataType: 'text'
+                    })
+                    .done(function(data) {
+                        if ($this.data('bookmarkletify-dev') === undefined) {
+                            newHref = 'javascript:' + data;
+                        }
+                        else {
+                            // A very quick minifier for creating a single line bookmarklet, is not sensitive to single or double-quoted strings
+                            newHref = 'javascript:' + data.replace(/(\r\n\s*|\n\s*|\r\s*|\t+)/gm,'').replace(/\s+/gm, ' ').replace(/\s*([=\{\}\(\);])\s*/gm,'$1');
+                        }
+
+                        $this.attr('href', newHref);
+
+                    });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1>Grid Vertical Horizontal Bookmarklet</h1>
+    <p>2012 July 14</p>
+    <p>A bookmarklet to help perfect my layouts.</p>
+    <h2>The Bookmarklet</h2>
+    <p class="kwn"><a class="bookmarkletify" href="grid-vertical-horizontal-bookmarklet.js">Grid Vertical Horizontal</a> Click once for horizontal, twice for vertical and thrice for off.</p>
+    <h2>Tutorial</h2>
+    <ol>
+        <li>Drag the above link to your Bookmarks Bar to install</li>
+        <li>Click the Bookmarklet in the Bookmarks Bar</li>
+    </ol>
+    <h2>Dev</h2>
+    <p class="kwn"><a class="bookmarkletify" href="grid-vertical-horizontal-bookmarklet.src.js" data-bookmarkletify-dev>Dev</a></p>
+</body>
+
+</html>
